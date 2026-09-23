@@ -1,0 +1,14 @@
+# build output
+build/
+# vendored ffmpeg: source download, extracted tree, static libraries (rebuilt by ffmpeg/build-ffmpeg.sh)
+ffmpeg/ffmpeg-*/
+ffmpeg/*.tar.xz
+ffmpeg/install/
+ffmpeg/configure.log
+# local signing material, never commit
+*.p12
+*.pem
+*.cer
+# macOS
+.DS_Store
+Icon?

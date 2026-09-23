@@ -1,0 +1,15 @@
+--- a/libavcodec/dcaenc.c
++++ b/libavcodec/dcaenc.c
+@@ -969,7 +969,11 @@
+ 
+     for (k = 0; k < 512; k++)
+         for (ch = 0; ch < c->channels; ch++) {
+-            const int chi = c->channel_order_tab[ch];
++            /* channel_order_tab only lists the fullband channels; the last history row belongs to the LFE
++             * channel, whose input index comes from lfe_index (the table holds -1 there, which read one
++             * sample before the buffer and stored another channel's data as LFE history). */
++            const int chi = (c->lfe_channel && ch == c->channels - 1) ? lfe_index[c->channel_config]
++                                                                        : c->channel_order_tab[ch];
+ 
+             c->history[ch][k] = input[k * c->channels + chi];
+         }
